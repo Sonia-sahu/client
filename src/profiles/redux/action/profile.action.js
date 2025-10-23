@@ -5,7 +5,6 @@ import {
   createProfile,
   getCurrentProfile,
 } from "../../services/profile.service";
-import API from "../../../utils/api";
 
 export const addEducationAction = createAsyncThunk(
   "profile/addEducationAction",

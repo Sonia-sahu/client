@@ -1,7 +1,7 @@
-import React from 'react'
-import EduRow from './EduRow'
+import React from "react";
+import EduRow from "./EduRow";
 
-const EduDetails = () => {
+const EduDetails = ({ education }) => {
   return (
     <>
       <h2 className="my-2">Education Credentials</h2>
@@ -15,11 +15,11 @@ const EduDetails = () => {
           </tr>
         </thead>
         <tbody>
-          <EduRow/>
+          <EduRow education={education} />
         </tbody>
       </table>
     </>
-  )
-}
+  );
+};
 
-export default EduDetails
+export default EduDetails;

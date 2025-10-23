@@ -1,5 +1,8 @@
 import React from "react";
-import { addEducationAction } from "../../redux/action/profile.action";
+import {
+  addEducationAction,
+  getCurrentProfileAction,
+} from "../../redux/action/profile.action";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
@@ -29,6 +32,7 @@ const AddEducation = () => {
     e.preventDefault();
     console.log(formData);
     dispatch(addEducationAction(formData)).unwrap();
+    dispatch(getCurrentProfileAction);
     navigate("/dashboard");
   };
   // useEffect(() => {

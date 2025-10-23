@@ -1,7 +1,7 @@
 import React from "react";
 import ExpRow from "./ExpRow";
 
-const ExpDetails = () => {
+const ExpDetails = ({ experience }) => {
   return (
     <>
       <h2 className="my-2">Experience Credentials</h2>
@@ -23,7 +23,7 @@ const ExpDetails = () => {
               <button className="btn btn-danger">Delete</button>
             </td>
           </tr> */}
-         <ExpRow/>
+          <ExpRow experience={experience} />
         </tbody>
       </table>
     </>

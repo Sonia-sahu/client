@@ -7,9 +7,14 @@ import { Link } from "react-router-dom";
 // import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentProfileAction } from "../../profiles/redux/action/profile.action";
+
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { profile, error } = useSelector((state) => state.profile);
+  const firstName =
+    profile?.user?.name &&
+    profile.user.name.split(" ")[0].charAt(0).toUpperCase() +
+      profile.user.name.split(" ")[0].slice(1);
 
   useEffect(() => {
     //to call the action
@@ -21,14 +26,12 @@ const Dashboard = () => {
     <section class="container">
       <h1 class="large text-primary">Dashboard</h1>
       <p class="lead">
-        <i class="fas fa-user"></i> Welcome John Doe
+        <i class="fas fa-user"></i> Welcome {firstName || "User"}
       </p>
       <DashboardAction></DashboardAction>
 
-      <ExpDetails></ExpDetails>
-
-      <h2 class="my-2">Education Credentials</h2>
-      <EduDetails></EduDetails>
+      <ExpDetails experience={profile?.experience}></ExpDetails>
+      <EduDetails education={profile?.education}></EduDetails>
 
       <div class="my-2">
         <button class="btn btn-danger">
