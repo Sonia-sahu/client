@@ -1,65 +1,64 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  createPostAction,
-  getPostByIdAction,
-  getPostsAction,
-} from "../action/post.action";
-
+  submitPostAction,
+  loadPostsAction,
+  deletePostAction,
+} from "../action/post.action"; // Hypothetical actions for post management
 const postState = {
-  posts: [],
   post: null,
-  loading: true,
-  error: {},
+  posts: [], // List to store posts
+  loading: false,
+  error: null,
 };
-
+// posts: to store all posts
+// loading: to indicate if a post-related operation is in progress
+// error: to store any error messages related to post actions
 const postSlice = createSlice({
   name: "post",
   initialState: postState,
-  reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(submitPostAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(submitPostAction.fulfilled, (state, action) => {
+        state.loading = false;
 
-      //getPostsAction
-      .addCase(getPostsAction.pending, (state) => {
+        if (Array.isArray(state.posts) && action.payload?.data) {
+          state.posts.unshift(action.payload.data);
+        } else {
+          state.posts = [action.payload.data]; // fallback if posts is undefined
+        }
+      })
+      .addCase(submitPostAction.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(loadPostsAction.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getPostsAction.fulfilled, (state, action) => {
+      .addCase(loadPostsAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.posts = action.payload.data;
+        state.posts = action.payload.data; // Assuming payload structure with `data` containing posts
       })
-      .addCase(getPostsAction.rejected, (state, action) => {
-        console.log(action);
+      .addCase(loadPostsAction.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.error.message;
       })
-
-      //getPostByIdAction
-      .addCase(getPostByIdAction.pending, (state) => {
+      .addCase(deletePostAction.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getPostByIdAction.fulfilled, (state, action) => {
+      .addCase(deletePostAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.post = action.payload.data;
+        state.posts = state.posts.filter(
+          (post) => post.id !== action.payload.data.id
+        ); // Assuming payload with deleted post ID
       })
-      .addCase(getPostByIdAction.rejected, (state, action) => {
-        console.log(action);
+      .addCase(deletePostAction.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
-      })
-      // createPostAction
-      .addCase(createPostAction.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(createPostAction.fulfilled, (state, action) => {
-        state.loading = false;
-        state.posts.unshift(action.payload.data);
-      })
-      .addCase(createPostAction.rejected, (state, action) => {
-        console.log(action);
-        state.loading = false;
-        state.error = action.payload;
+        state.error = action.error.message;
       });
   },
+  reducers: {}, // Common business logic related to posts
 });
-
 export default postSlice.reducer;

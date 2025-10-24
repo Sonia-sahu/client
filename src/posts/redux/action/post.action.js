@@ -1,42 +1,43 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  createPost,
-  getAllPosts,
-  getPostById,
-} from "../../services/post.service";
-
-export const getPostsAction = createAsyncThunk(
-  "post/getPostsAction",
-  async (_, { rejectWithValue }) => {
+import { loadPost, deletePost, submitPost } from "../../services/post.service";
+export const submitPostAction = createAsyncThunk(
+  "posts/submitPostAction",
+  async (postData, { rejectWithValue }) => {
     try {
-      const response = await getAllPosts();
-      return { data: response.data, status: response.status };
-    } catch (err) {
-      return rejectWithValue(err?.data || { message: "Failed to load posts" });
-    }
-  }
-);
-export const getPostByIdAction = createAsyncThunk(
-  "post/getPostByIdAction",
-  async (postId, { rejectWithValue }) => {
-    try {
-      const response = await getPostById(postId);
+      const response = await submitPost(postData);
+      console.log(response);
       return { data: response.data, status: response.status };
     } catch (err) {
       return rejectWithValue(
-        err?.data || { message: "Failed to load post details" }
+        err?.data || { message: "Failed to create or update profile" }
       );
     }
   }
 );
-export const createPostAction = createAsyncThunk(
-  "post/createPostAction",
-  async (formData, { rejectWithValue }) => {
+
+export const loadPostsAction = createAsyncThunk(
+  "posts/loadPostsAction",
+  async (postData, { rejectWithValue }) => {
     try {
-      const response = await createPost(formData);
+      const response = await loadPost(postData);
       return { data: response.data, status: response.status };
     } catch (err) {
-      return rejectWithValue(err?.data || { message: "Failed to create post" });
+      return rejectWithValue(
+        err?.data || { message: "Failed to create or update profile" }
+      );
+    }
+  }
+);
+export const deletePostAction = createAsyncThunk(
+  "posts/deletePostAction",
+  async (postData, { rejectWithValue }) => {
+    try {
+      const response = await deletePost(postData);
+      return { data: response.data, status: response.status };
+    } catch (err) {
+      return rejectWithValue(
+        err?.data || { message: "Failed to create or update profile" }
+      );
     }
   }
 );

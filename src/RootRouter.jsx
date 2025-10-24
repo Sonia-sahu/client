@@ -5,6 +5,7 @@ import AuthRouter from "./auth/router/AuthRouter";
 import DashboardRouter from "./dashboard/router/DashboardRouter";
 import ProfileRouter from "./profiles/router/ProfileRouter";
 import PostRouter from "./posts/router/PostRouter";
+import CommentRouter from "./comments/router/CommentRouter";
 
 const RootRouter = () => {
   //useMatch = is a hook provided by React Router v6 that allows you to match the current URL against a specific path pattern.

@@ -8,7 +8,7 @@ function App() {
     <>
       <Header />
       <RootRouter />
-      <Footer /> 
+      <Footer />
     </>
   );
 }

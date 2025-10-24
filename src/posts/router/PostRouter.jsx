@@ -1,12 +1,14 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Posts from "../components/Posts";
-import PostDetails from "../components/PostDetails";
+import Discussion from "../../comments/components/Discussion"; // ✅ Import your discussion component
+
 const PostRouter = () => {
   return (
     <Routes>
-      <Route path="" element={<Posts />} />
-      <Route path=":postId" element={<PostDetails />} />
+      <Route path="" element={<Posts />} /> {/* /posts */}
+      <Route path="createpost" element={<Posts />} /> {/* optional */}
+      <Route path=":id" element={<Discussion />} /> {/* /posts/:id */}
     </Routes>
   );
 };

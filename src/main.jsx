@@ -7,13 +7,16 @@ import "./index.css";
 
 import App from "./App.jsx";
 import store from "./rtk/store.js";
-
+import { ThemeProvider } from "@emotion/react";
+import theme from "./utils/theme.js";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+      </Provider>
+    </ThemeProvider>
   </StrictMode>
 );
